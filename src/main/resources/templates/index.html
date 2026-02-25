@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Board Project</title>
+
+    <!-- 정적 CSS 연결 -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>hello world!</h1>
+
+<header class="header">
+    <h1>Board Project</h1>
+
+    <div class="auth-area">
+        <div th:if="${session.loginMember != null}">
+            <span th:text="${session.loginMember.username}"></span> 님 환영합니다.
+            <a th:href="@{/member/logout}">로그아웃</a>
+        </div>
+
+        <div th:if="${session.loginMember == null}">
+            <a th:href="@{/member/login}">로그인</a>
+            <a th:href="@{/member/join}">회원가입</a>
+        </div>
+    </div>
+</header>
+
+<hr/>
+
+<main>
+    <h2>메인 페이지</h2>
+
+    <p>스프링 + MyBatis + Thymeleaf 게시판 프로젝트</p>
+
+    <a class="btn" th:href="@{/board/list}">게시판 이동</a>
+</main>
+
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

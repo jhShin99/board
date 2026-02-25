@@ -5,15 +5,41 @@
 
 <mapper namespace="com.example.board.mapper.MemberMapper">
 
-    <select id="findById" resultType="Member">
+    <insert id="insert" parameterType="Member">
+        INSERT INTO member (username, password, role)
+        VALUES (#{username}, #{password}, 'USER')
+    </insert>
+
+    <select id="findById" parameterType="long" resultType="Member">
         SELECT *
         FROM member
         WHERE id = #{id}
     </select>
 
-    <insert id="insert" parameterType="Member">
-        INSERT INTO member (username, password, role)
-        VALUES (#{username}, #{password}, #{role})
-    </insert>
+    <select id="findByUsername" parameterType="string" resultType="Member">
+        SELECT *
+        FROM member
+        WHERE username = #{username}
+    </select>
 
+    <update id="updateRememberToken">
+        UPDATE member
+        SET remember_token = #{token},
+            token_expiry = #{expiry}
+        WHERE id = #{memberId}
+    </update>
+
+    <select id="findByRememberToken" parameterType="string" resultType="member">
+        SELECT *
+        FROM member
+        WHERE remember_token = #{token}
+          AND token_expiry > NOW()
+    </select>
+
+    <update id="clearRememberToken">
+        UPDATE member
+        SET remember_token = NULL,
+            token_expiry = NULL
+        WHERE id = #{memberId}
+    </update>
 </mapper>
