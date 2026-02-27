@@ -37,6 +37,29 @@ public class MemberService {
         return findMember;
     }
 
+    @Transactional
+    public void changePassword(Long memberId,
+                               String currentPassword,
+                               String newPassword) {
+
+        Member member = memberMapper.findById(memberId);
+
+        if (member == null) {
+            throw new IllegalArgumentException("회원 없음");
+        }
+
+        // 1️⃣ 현재 비밀번호 확인
+        if (!passwordEncoder.matches(currentPassword, member.getPassword())) {
+            throw new IllegalArgumentException("현재 비밀번호 불일치");
+        }
+
+        // 2️⃣ 새 비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        // 3️⃣ 비밀번호 + rememberToken 제거
+        memberMapper.updatePassword(memberId, encodedPassword);
+    }
+
     public Member findByRememberToken(String token) {
 
         if (token == null || token.isEmpty()) {

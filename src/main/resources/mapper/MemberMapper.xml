@@ -16,6 +16,14 @@
         WHERE id = #{id}
     </select>
 
+    <update id="updatePassword">
+        UPDATE member
+        SET password = #{encodedPassword},
+            remember_token = NULL,
+            remember_token_expiry = NULL
+        WHERE id = #{memberId}
+    </update>
+
     <select id="findByUsername" parameterType="string" resultType="Member">
         SELECT *
         FROM member

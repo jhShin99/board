@@ -1,12 +1,14 @@
 package com.example.board.controller;
 
 import com.example.board.domain.Member;
+import com.example.board.dto.PasswordChangeForm;
 import com.example.board.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -97,5 +99,31 @@ public class MemberController {
         response.addCookie(cookie);
 
         return "redirect:/";
+    }
+    @GetMapping("/password")
+    public String changePasswordForm(Model model) {
+        model.addAttribute("form", new PasswordChangeForm());
+        return "member/password";
+    }
+
+    @PostMapping("/password")
+    public String changePassword(@ModelAttribute("form") PasswordChangeForm form,
+                                 HttpSession session) {
+
+        Member loginMember = (Member) session.getAttribute("loginMember");
+
+        if (!form.getNewPassword().equals(form.getConfirmPassword())) {
+            throw new IllegalArgumentException("새 비밀번호 불일치");
+        }
+
+        memberService.changePassword(
+                loginMember.getId(),
+                form.getCurrentPassword(),
+                form.getNewPassword()
+        );
+
+        session.invalidate();  // 🔥 재로그인 유도
+
+        return "redirect:/member/login";
     }
 }

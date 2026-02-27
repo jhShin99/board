@@ -11,6 +11,8 @@ public interface MemberMapper {
 
     Member findById(Long id);
 
+    void updatePassword(Long memberId, String encodedPassword);
+
     Member findByUsername(String username);
 
     void updateRememberToken(@Param("memberId") Long memberId,
