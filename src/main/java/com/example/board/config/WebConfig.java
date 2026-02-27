@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(autoLoginInterceptor)
-                .addPathPatterns("/board/write, /board/edit/**", "/admin/**");
+                .addPathPatterns("/**");
 
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/board/write", "/board/edit/**", "/admin/**")

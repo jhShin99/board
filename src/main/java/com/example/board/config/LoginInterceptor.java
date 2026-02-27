@@ -19,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         if(session == null || session.getAttribute("loginMember") == null) {
 
-            response.sendRedirect("/login-page");
+            response.sendRedirect("/member/login");
             return false;
         }
 
