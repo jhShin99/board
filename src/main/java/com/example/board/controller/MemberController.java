@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,7 +30,12 @@ public class MemberController {
 
     // 회원가입 처리
     @PostMapping("/join")
-    public String join(Member member) {
+    public String join(Member member, RedirectAttributes redirectAttributes) {
+        Member findByUsername = memberService.findByUsername(member.getUsername());
+        if (findByUsername != null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "이미 존재하는 아이디입니다.");
+            return "redirect:/member/join";
+        }
         memberService.join(member);
         return "redirect:/member/login";
     }

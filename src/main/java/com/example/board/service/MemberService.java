@@ -22,6 +22,10 @@ public class MemberService {
         memberMapper.insert(member);
     }
 
+    public Member findByUsername(String username) {
+        return memberMapper.findByUsername(username);
+    }
+
     public Member login(String username, String password) {
 
         Member findMember = memberMapper.findByUsername(username);
