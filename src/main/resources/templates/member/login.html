@@ -3,28 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            box-sizing: border-box;
+            height: 100%;
+        }
+
+        .login_container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login_logo {
+            width: 80px;
+            height: 80px;
+        }
+
+        .login_box {
+            width: 400px;
+            height: 300px;
+            border: 1px solid black;
+            border-radius: 10px;
+            margin-bottom: 100px;
+        }
+
+        .login_header {
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo {
+            cursor: pointer;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .column {
+            flex-direction: column;
+        }
+
+        .a-center {
+            align-items: center;
+        }
+
+        .j-cener {
+            justify-content: center;
+        }
+
+        .inputbox {
+            width: 300px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .w-300 {
+            width: 300px;
+        }
+
+        .m-auto {
+            margin: 0 auto;
+        }
+
+        .space-between {
+            justify-content: space-between;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .mt-50 {
+            margin-top: 50px;
+        }
+    </style>
 </head>
 <body>
-
-<h2>로그인</h2>
-
-<div th:if="${param.error}">
-    <p style="color:red;">아이디 또는 비밀번호가 틀렸습니다.</p>
+<div class="login_container">
+    <div class="logo" onclick="go(1)"><img src="/img/logo.png" class="login_logo"></div>
+    <div class="login_box">
+        <div class="login_header">
+            <h1>로그인</h1>
+        </div>
+        <form th:action="@{/member/login}" method="post">
+            <div class="flex column a-center">
+                <div><input type="text" class="inputbox" name="username" placeholder="아이디"></div>
+                <div><input type="password" class="inputbox" name="password" placeholder="비밀번호"></div>
+            </div>
+            <div class="flex j-cener">
+                <div class="w-300 flex space-between">
+                    <div><input type="checkbox" name="rememberMe" id="rememberMe"><label for="rememberMe">로그인 상태
+                        유지</label></div>
+                    <button type="submit">로그인</button>
+                </div>
+            </div>
+            <div class="w-300 m-auto text-right">
+                <br>
+                <a href="/member/join">회원가입</a>
+            </div>
+        </form>
+        <div th:if="${param.error}" class="mt-50">
+            <p style="color:red;">아이디 또는 비밀번호가 틀렸습니다.</p>
+        </div>
+    </div>
 </div>
-
-<form th:action="@{/member/login}" method="post">
-    아이디:
-    <input type="text" name="username" required />
-    <br/>
-
-    비밀번호:
-    <input type="password" name="password" required />
-    <br/>
-    <input type="checkbox" name="rememberMe"> 로그인 상태 유지
-    <button type="submit">로그인</button>
-</form>
-
-<a th:href="@{/member/join}">회원가입</a>
-
+<script>
+    function go(number) {
+        if (number === 1) {
+            location.href = "/";
+        }
+    }
+</script>
 </body>
 </html>

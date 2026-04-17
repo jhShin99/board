@@ -2,39 +2,48 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Board Project</title>
-
-    <!-- 정적 CSS 연결 -->
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Document</title>
 </head>
 <body>
-
-<header class="header">
-    <h1>Board Project</h1>
-
-    <div class="auth-area">
+<div class="header">
+    <div class="logo"><img class="main_logo" src="/img/logo.png"></div>
+    <div><h1 class="pointer" style="margin-left: 10px;">GROUPWARE</h1></div>
+    <div class="menu">
         <div th:if="${session.loginMember != null}">
-            <span th:text="${session.loginMember.username}"></span> 님 환영합니다.
-            <a th:href="@{/member/logout}">로그아웃</a>
+            <span th:text="${session.loginMember.username}"></span> 님 | <span class="pointer" onclick="go(5)">로그아웃</span>
         </div>
-
         <div th:if="${session.loginMember == null}">
-            <a th:href="@{/member/login}">로그인</a>
-            <a th:href="@{/member/join}">회원가입</a>
+            <span class="pointer" onclick="go(3)">로그인</span> | <span class="pointer" onclick="go(4)">회원가입</span>
         </div>
     </div>
-</header>
-
-<hr/>
-
-<main>
-    <h2>메인 페이지</h2>
-
-    <p>스프링 + MyBatis + Thymeleaf 게시판 프로젝트</p>
-
-    <a class="btn" th:href="@{/board/list}">게시판 이동</a>
-</main>
-
-<script th:src="@{/js/main.js}"></script>
+</div>
+<div class="nav">
+    <div class="nav_container">
+        <div class="item" onclick="go(1)">홈</div>
+        <div class="item" onclick="go(2)">게시판</div>
+    </div>
+</div>
+<div class="main">
+</div>
+<div class="footer">
+    <div>Copyrightⓒ2026 GROUPWARE ALL RIGHTS RESERVED.</div>
+</div>
+<script>
+    function go(number) {
+        if (number === 1) {
+            location.href = "/";
+        } else if (number === 2) {
+            location.href = "/board/list";
+        } else if (number === 3) {
+            location.href = "/member/login";
+        } else if (number === 4) {
+            location.href = "/member/join";
+        } else if (number === 5) {
+            location.href = "/member/logout";
+        }
+    }
+</script>
 </body>
 </html>
