@@ -26,7 +26,7 @@
 
         .login_box {
             width: 400px;
-            height: 300px;
+            height: 350px;
             border: 1px solid black;
             border-radius: 10px;
             margin-bottom: 100px;
@@ -78,10 +78,6 @@
         .text-right {
             text-align: right;
         }
-
-        .mt-50 {
-            margin-top: 50px;
-        }
     </style>
 </head>
 <body>
@@ -96,6 +92,9 @@
                 <div><input type="text" class="inputbox" name="username" placeholder="아이디"></div>
                 <div><input type="password" class="inputbox" name="password" placeholder="비밀번호"></div>
             </div>
+            <div th:if="${param.error}" class="w-300 m-auto">
+                <p style="color:red;">아이디 또는 비밀번호가 틀렸습니다.</p>
+            </div>
             <div class="flex j-cener">
                 <div class="w-300 flex space-between">
                     <div><input type="checkbox" name="rememberMe" id="rememberMe"><label for="rememberMe">로그인 상태
@@ -108,9 +107,6 @@
                 <a href="/member/join">회원가입</a>
             </div>
         </form>
-        <div th:if="${param.error}" class="mt-50">
-            <p style="color:red;">아이디 또는 비밀번호가 틀렸습니다.</p>
-        </div>
     </div>
 </div>
 <script>
